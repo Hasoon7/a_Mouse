@@ -1,8 +1,6 @@
-#include "MazeRepresentation.h"
 #include "DFS_implementation.h"
 
-
-bool dfsPath(int x, int y, int fx, int fy){
+bool DFS_implementation::dfsPath(int x, int y, int fx, int fy) {
     visited[x][y] = true;
 
     path[pathLen++] = (Cell){x, y};
@@ -12,7 +10,7 @@ bool dfsPath(int x, int y, int fx, int fy){
 
     for (int dir = 0; dir < 4; dir++) {
 
-        if (maze[x][y][dir])
+        if (myMaze.maze[x][y][dir])
             continue;
 
         int nx = x + dx[dir];

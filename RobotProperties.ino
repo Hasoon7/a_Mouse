@@ -1,4 +1,4 @@
-#include "MazeRepresentation.cpp"
+#include "MazeRepresentation.h"
 #include "Adafruit_VL53L0X.h"
 #include <Arduino.h>
 #include <ESP32Encoder.h>

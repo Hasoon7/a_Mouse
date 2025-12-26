@@ -1,6 +1,8 @@
 #pragma once
 #include <bits/stdc++.h>
 using namespace std;
+
+
 /*
 to get a basic idea of how the code (or rather the way of implementing the robot moving through the maze) works.
 is by understanding that the maze and its cells are constant, as in the north side of a cell is always pointed upwards in each and every cell.
@@ -20,13 +22,13 @@ the coordinates are represented as such:
   |
 */
 
-//enum definitions
 enum heading : int
 {West , North , East , South};
+
 enum direction : int
 {Left , Front , Right};
 
-//functions used in both .ino and .cpp
+
 int readLeftSensor();
 int readFrontSensor();
 int readRightSensor();
@@ -36,26 +38,22 @@ void moveForward();
 void turnRight();
 
 
-//properties
-bool maze[6][6][4];
-bool checkedCells[6][6];
-heading mouseHeading = East;
-pair <int,int> currentPosition = std::make_pair(0 , 0);
+class MazeRepresentation {
+public:
+  bool maze[6][6][4];
+  bool checkedCells[6][6];
+  heading mouseHeading = East;
+  pair <int,int> currentPosition = std::make_pair(0 , 0);
 
 
-void initializeMaze();
-
-pair<int,int> getLeftCell(int x , int y , heading head);
-pair<int,int> getFrontCell(int x , int y , heading head);
-pair<int,int> getRightCell(int x , int y , heading head);
-pair<int,int> getBackCell(int x , int y , heading head);
-
-void updateCellSurroundingWalls(int x , int y , heading head);
-
-void changeHeading(int turn);
-
-void goingToLeftCell();
-void goingToRightCell();
-
-int relative_to_absolute(int relative_direction);
-
+  MazeRepresentation();
+  void updateCellSurroundingWalls(int x , int y , heading head);
+  std::pair<int,int> getLeftCell(int x , int y , heading head);
+  std::pair<int,int> getFrontCell(int x , int y , heading head);
+  std::pair<int,int> getRightCell(int x , int y , heading head);
+  std::pair<int,int> getBackCell(int x , int y , heading head);
+  void goingToLeftCell();
+  void goingToRightCell();
+  void changeHeading(int turn);
+  int relative_to_absolute(int relative_direction);
+};
