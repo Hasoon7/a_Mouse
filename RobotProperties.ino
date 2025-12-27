@@ -46,28 +46,46 @@ VL53L0X_RangingMeasurementData_t measure1;
 VL53L0X_RangingMeasurementData_t measure2;
 VL53L0X_RangingMeasurementData_t measure3;
 
+// Example max speed in counts/sec
+const float MAX_SPEED = 200.0;
 
-void move(){
-  
+void stopMotors() {
+    // Stop left motor
+    ledcWrite(ENB, 0);
+
+    // Stop right motor
+    ledcWrite(ENA, 0);
+}
+
+void move(int encoderCounts){
+
   Serial.println("Moving forward...");
 
-  // Forward direction
+  for(int i = 0 ; i < 0.1*encoderCounts ; i+=((0.1*encoderCounts)/125)){
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    ledcWrite(ENA, i);
+    ledcWrite(ENB, i);
+  }
+  while(leftEncoder.getCount() < 0.9*encoderCounts && rightEncoder.getCount() < 0.9 * encoderCounts){
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, HIGH);
-
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, LOW);
-
-  ledcWrite(ENA, 150);   // right motor
-  ledcWrite(ENB, 150);   // left motor
-
-  timer(200);  // short movement
-
-  // Stop motors
-  ledcWrite(ENA, 0);
-  ledcWrite(ENB, 0);
-
-  timer(2000); // wait before next test
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  ledcWrite(ENA, 125);   // right motor
+  ledcWrite(ENB, 125);   // left motor
+  }
+  for(int i = 125 ; i > 0 ; i-=((0.1*encoderCounts)/125)){
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    ledcWrite(ENA, i);
+    ledcWrite(ENB, i);
+  }
+  // stopMotors();
 }
 
 void moveUntil(int threshold){

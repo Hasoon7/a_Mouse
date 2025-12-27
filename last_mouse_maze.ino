@@ -20,16 +20,20 @@ void setup() {
 }
 
 void loop() {
-  int counterForLeft = 0;
-  int counterForRight = 0;
-  while(counterForLeft <= 5000 && counterForRight <= 5000){
-    move();
-    counterForLeft = leftEncoderCount();
-    counterForRight = rightEncoderCount();
-  }
-  readEncoders();
+
+  // int counterForLeft = 0;
+  // int counterForRight = 0;
+  // while(counterForLeft <= 5000 && counterForRight <= 5000){
+  //   move();
+  //   counterForLeft = leftEncoderCount();
+  //   counterForRight = rightEncoderCount();
+  // }
+  // readEncoders();
+  move(1000);
+  timer(1000);
   /*
-  move();
+  move(10000);
+  moveForwardProfiled(15000);
   readEncoders();
   Serial.print(F("1: ") );
   Serial.print(readLeftSensor());
@@ -40,5 +44,5 @@ void loop() {
   Serial.print(F("3: "));
   Serial.print(readRightSensor());
   Serial.println(F("  "));*/
-  timer(1000);
+  //timer(1000);
 }
