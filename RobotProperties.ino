@@ -49,6 +49,16 @@ VL53L0X_RangingMeasurementData_t measure3;
 // Example max speed in counts/sec
 const float MAX_SPEED = 200.0;
 
+void check(){
+  bool okA = ledcAttach(ENA, 1000, 8);
+  bool okB = ledcAttach(ENB, 1000, 8);
+
+  if (!okA || !okB) {
+      Serial.println("LEDC attach failed");
+      while (1);
+}
+}
+
 void stopMotors() {
     // Stop left motor
     ledcWrite(ENB, 0);
@@ -61,14 +71,13 @@ void move(int encoderCounts){
 
   Serial.println("Moving forward...");
 
-  for(int i = 0 ; i < 0.1*encoderCounts ; i+=((0.1*encoderCounts)/125)){
-    digitalWrite(IN1, LOW);
+  int i =100;
     digitalWrite(IN2, HIGH);
     digitalWrite(IN3, LOW);
     digitalWrite(IN4, HIGH);
     ledcWrite(ENA, i);
     ledcWrite(ENB, i);
-  }
+  
   while(leftEncoder.getCount() < 0.9*encoderCounts && rightEncoder.getCount() < 0.9 * encoderCounts){
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, HIGH);
@@ -85,7 +94,7 @@ void move(int encoderCounts){
     ledcWrite(ENA, i);
     ledcWrite(ENB, i);
   }
-  // stopMotors();
+  stopMotors();
 }
 
 void moveUntil(int threshold){
@@ -114,8 +123,8 @@ int rightEncoderCount(){
 void timer(int duration) {
   unsigned long start = millis();
   while (millis() - start < duration) {
-    
-  }
+
+    }
 }
 
 void readEncoders(){
@@ -150,15 +159,11 @@ void setPins(){
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
 
+  // pinMode(ENA, OUTPUT);
+  // pinMode(ENB , OUTPUT);
+
   // Encoder pins
   
-  // left encoder
-  pinMode(ENC_L_A, INPUT_PULLUP);
-  pinMode(ENC_L_B, INPUT_PULLUP);
-  
-  //right encoder
-  pinMode(ENC_R_A, INPUT_PULLUP);
-  pinMode(ENC_R_B, INPUT_PULLUP);
 
   ledcAttach(ENA, 1000, 8);  // pin, freq, resolution
   ledcAttach(ENB, 1000, 8);

@@ -29,11 +29,11 @@ void loop() {
   //   counterForRight = rightEncoderCount();
   // }
   // readEncoders();
-  move(1000);
-  timer(1000);
+  check();
   /*
-  move(10000);
   moveForwardProfiled(15000);
+  move(10000);
+  timer(1000);
   readEncoders();
   Serial.print(F("1: ") );
   Serial.print(readLeftSensor());
